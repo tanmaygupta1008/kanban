@@ -129,3 +129,11 @@ export const teamMembers = [
     { name: 'Charlie Brown', avatarUrl: 'https://placehold.co/100x100/FF8AAE/000000' },
     { name: 'Diana Miller', avatarUrl: 'https://placehold.co/100x100/469990/000000' },
 ];
+
+
+// NEW: Dummy project data
+export const projects = [
+    { id: 'phoenix', name: 'Project Phoenix' },
+    { id: 'alpha', name: 'Project Alpha' },
+    { id: 'beta', name: 'Project Beta' },
+];

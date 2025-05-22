@@ -11,7 +11,7 @@ interface AuthContextType {
   isLoggedIn: boolean;
   user: User | null;  // Add this
   login: (email: string, password: string) => Promise<boolean>;
-  signup: (email: string, password: string) => Promise<boolean>;
+  signup: (email: string, password: string, name: string, gender: string) => Promise<boolean>;
   logout: () => void;
   isLoading: boolean;
   error: string | null;
@@ -169,14 +169,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   //   }
   // };
 
-  const signup = async (email: string, password: string): Promise<boolean> => {
+  const signup = async (email: string, password: string, name: string, gender: string): Promise<boolean> => {
     setIsLoading(true);
     setError(null);
     try {
       const response = await fetch('http://localhost:5000/api/auth/signup', { // Ensure correct server URL
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, name, gender }),
       });
       const data = await response.json();
       if (response.ok && data.token) {
