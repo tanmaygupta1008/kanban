@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-label": "^2.1.7",
@@ -19,6 +20,7 @@
     "bcrypt": "^6.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "form": "^0.2.5",
     "framer-motion": "^12.12.1",
     "input": "^1.0.1",
     "label": "^0.2.2",
@@ -27,10 +29,12 @@
     "pnpm": "^10.11.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-hook-form": "^7.56.4",
     "react-router-dom": "^7.6.0",
     "shadcn": "^2.5.0",
     "tailwind-merge": "^3.3.0",
-    "types": "^0.1.1"
+    "types": "^0.1.1",
+    "zod": "^3.25.17"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

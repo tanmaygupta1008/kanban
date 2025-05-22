@@ -276,7 +276,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ column, onCardMove, onCardA
                     <KanbanCard key={card.id} card={card} />
                 ))}
             </ScrollArea>
-            <div className="mt-6">
+            <div className="mt-4">
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                     <DialogTrigger asChild>
                         <Button

@@ -337,7 +337,7 @@ const KanbanCard: React.FC<KanbanCardProps> = ({ card, onCardUpdated }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.2 }}
-            className="group"
+            className="group pb-5"
             draggable
             data-card-id={localCard.id}
         >
