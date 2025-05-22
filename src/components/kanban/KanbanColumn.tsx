@@ -281,7 +281,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ column, onCardMove, onCardA
                     <DialogTrigger asChild>
                         <Button
                             variant="outline"
-                            className="w-full text-white hover:bg-white/10 border-gray-700 flex items-center gap-2"
+                            className="w-[200px] mx-auto text-black hover:bg-white/20 hover:text-white border-gray-700 flex items-center gap-2 transform transition-transform duration-300 hover:scale-105"
                         >
                             <PlusCircle className="w-4 h-4" />
                             Add New Card

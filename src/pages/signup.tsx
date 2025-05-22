@@ -63,7 +63,7 @@ const SignupPage = () => {
         </CardContent>
         <CardFooter className="text-center text-sm text-gray-600 dark:text-gray-400">
           Already have an account?{' '}
-          <a href="#" onClick={() => window.location.hash = '#login'} className="font-medium text-blue-600 hover:underline dark:text-blue-400">
+          <a href="/" onClick={() => window.location.hash = '#login'} className="font-medium text-blue-600 hover:underline dark:text-blue-400">
             Login
           </a>
         </CardFooter>

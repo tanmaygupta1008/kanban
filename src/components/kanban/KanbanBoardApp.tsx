@@ -117,36 +117,6 @@ const KanbanBoardApp: React.FC = () => {
     const [columns, setColumns] = useState(initialColumns);
     const { logout } = useContext(AuthContext);
 
-    // const handleCardMove = useCallback(
-    //     (cardId: string, newColumnKey: ColumnKey, oldColumnKey: ColumnKey) => {
-    //         setColumns((prevColumns) => {
-    //             const newColumns = [...prevColumns];
-
-    //             // Remove card from old column
-    //             const oldColumn = newColumns.find((col) => col.key === oldColumnKey);
-    //             // console.log('oldColumn : \n', oldColumn);
-    //             if (oldColumn) {
-    //                 oldColumn.cards = oldColumn.cards.filter((card) => card.id !== cardId);
-    //             }
-
-    //             // Add card to new column
-    //             const newColumn = newColumns.find((col) => col.key === newColumnKey);
-    //             if (newColumn) {
-    //                 const cardToMove = prevColumns
-    //                     .find((col) => col.key === oldColumnKey)
-    //                     ?.cards.find((card) => card.id === cardId);
-    //                 console.log('cardToMove : \n', cardToMove);
-    //                 if (cardToMove) {
-    //                     newColumn.cards = [...newColumn.cards, cardToMove];
-    //                 }
-    //             }
-
-    //             return newColumns;
-    //         });
-    //     },
-    //     []
-    // );
-
     const handleCardMove = useCallback(
         (cardId: string, newColumnKey: ColumnKey, oldColumnKey: ColumnKey) => {
             setColumns((prevColumns) => {
