@@ -2,6 +2,8 @@ import { createContext, useState, useEffect, } from 'react';
 import type { ReactNode, } from 'react';
 
 interface User {
+  id: string;
+  name: string;
   email: string;
   // Add other user properties as needed
 }
@@ -94,7 +96,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', { // Ensure correct server URL
+      const response = await fetch('http://localhost:5000/auth/login', { // Ensure correct server URL
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -108,8 +110,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         //   setUser(data.user);
         // } else {
           // If not, just set the email for now
-          localStorage.setItem('user', JSON.stringify({ email }));
-          setUser({ email });
+          // Provide default values for id and name if not returned by the backend
+          const userObj = { id: data.user?.id || '', name: data.user?.name || '', email };
+          localStorage.setItem('user', JSON.stringify(userObj));
+          setUser(userObj);
         // }
         setIsLoggedIn(true);
         return true;
@@ -173,7 +177,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:5000/api/auth/signup', { // Ensure correct server URL
+      const response = await fetch('http://localhost:5000/auth/signup', { // Ensure correct server URL
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, name, gender }),
@@ -187,8 +191,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         //   setUser(data.user);
         // } else {
           // If not, just set the email for now
-          localStorage.setItem('user', JSON.stringify({ email }));
-          setUser({ email });
+          const userObj = { id: data.user?.id || '', name: name || '', email };
+          localStorage.setItem('user', JSON.stringify(userObj));
+          setUser(userObj);
         // }
         setIsLoggedIn(true); // Auto-login after signup
         return true;

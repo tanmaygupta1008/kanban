@@ -19,6 +19,8 @@ export interface Column {
 }
 
 export interface User {
+    // Added: id to match backend _id and frontend usage (e.g., in teamMembers)
+    id: string;
     name: string;
-    avatarUrl: string;
+    avatarUrl?: string; // Made optional as it might not always be present
 }
