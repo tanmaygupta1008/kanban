@@ -24,15 +24,19 @@ const KanbanBoardApp: React.FC = () => {
     const [projectsError, setProjectsError] = useState<string | null>(null);
     const [currentProjectDetails, setCurrentProjectDetails] = useState<Project | null>(null); // To hold full project details with team members
 
+
+    // totally working fine
     const fetchKanbanData = useCallback(async (projectId: string) => {
         setLoading(true);
         setError(null);
         try {
             const kanbanResponse = await fetch(`http://localhost:5000/projects/${projectId}/kanban`);
+            // console.log("Knaban Response :", projectId);
             if (!kanbanResponse.ok) {
                 throw new Error(`Failed to fetch Kanban data: ${kanbanResponse.statusText}`);
             }
             const kanbanData = await kanbanResponse.json();
+            console.log("Kanban Data:", kanbanData);
             const adaptedColumns: Column[] = kanbanData.columns.map((col: Column) => ({
                 key: col.key,
                 title: col.title,
@@ -41,6 +45,7 @@ const KanbanBoardApp: React.FC = () => {
                     idea: card.idea,
                     description: card.description,
                     image: card.image,
+                    section: card.section,
                     videoLink: card.videoLink,
                     references: card.references,
                     createdAt: new Date(card.createdAt),
@@ -64,12 +69,52 @@ const KanbanBoardApp: React.FC = () => {
         }
     }, []);
 
+
+    // useEffect(() => {
+    //     const fetchAllProjects = async () => {
+    //         setProjectsLoading(true);
+    //         setProjectsError(null);
+    //         try {
+    //             console.log("User ID:", user);
+    //             const response = await fetch('http://localhost:5000/projects');
+    //             if (!response.ok) {
+    //                 throw new Error(`Failed to fetch projects: ${response.statusText}`);
+    //             }
+    //             const data: Project[] = await response.json();
+    //             setAllProjects(data);
+    //             if (data.length > 0 && !selectedProject) {
+    //                 setSelectedProject(data[0]);
+    //             }
+    //         } catch (err: unknown) {
+    //             console.error("Error fetching all projects:", err);
+    //             if (err instanceof Error) {
+    //                 setProjectsError(err.message || 'Failed to load projects.');
+    //             } else {
+    //                 setProjectsError('Failed to load projects.');
+    //             }
+    //         } finally {
+    //             setProjectsLoading(false);
+    //         }
+    //     };
+
+    //     fetchAllProjects();
+    // }, []);
+
+
+
+
+
+    // totally working fine
+
+    // In KanbanBoardApp.tsx
+
     useEffect(() => {
         const fetchAllProjects = async () => {
             setProjectsLoading(true);
             setProjectsError(null);
             try {
-                const response = await fetch('http://localhost:5000/projects');
+                // Send the user ID to the backend to fetch user-specific projects
+                const response = await fetch(`http://localhost:5000/projects/user/${user?.id}`);
                 if (!response.ok) {
                     throw new Error(`Failed to fetch projects: ${response.statusText}`);
                 }
@@ -79,7 +124,7 @@ const KanbanBoardApp: React.FC = () => {
                     setSelectedProject(data[0]);
                 }
             } catch (err: unknown) {
-                console.error("Error fetching all projects:", err);
+                console.error("Error fetching user's projects:", err);
                 if (err instanceof Error) {
                     setProjectsError(err.message || 'Failed to load projects.');
                 } else {
@@ -90,19 +135,50 @@ const KanbanBoardApp: React.FC = () => {
             }
         };
 
-        fetchAllProjects();
-    }, []);
+        if (user?.id) {
+            fetchAllProjects();
+        }
+    }, [user?.id, selectedProject]);
 
+
+
+
+
+    // totally working fine
     useEffect(() => {
         if (selectedProject) {
+            // console.log('Fetching data for project', selectedProject);
+            // console.log('Fetching data for project with id:', selectedProject._id);
             fetchKanbanData(selectedProject._id);
         }
     }, [selectedProject, fetchKanbanData]);
 
+    // left for checking
     const handleProjectSelect = useCallback((project: Project) => {
         setSelectedProject(project);
         // Fetch Kanban data will be triggered by the selectedProject change
     }, []);
+
+
+
+
+    
+    // In KanbanBoardApp.tsx
+
+    // useEffect(() => {
+    //     if (selectedProject) {
+    //         fetchKanbanData(selectedProject._id);
+    //     }
+    // }, [selectedProject, fetchKanbanData]);
+
+    // const handleProjectSelect = useCallback((project: Project) => {
+    //     setSelectedProject(project);
+    //     // Fetch Kanban data will be triggered by the selectedProject change
+    // }, []);
+
+
+
+
 
     const handleCardMove = useCallback(
         async (cardId: string, newColumnKey: ColumnKey, oldColumnKey: ColumnKey) => {
@@ -143,7 +219,7 @@ const KanbanBoardApp: React.FC = () => {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        newSection: newColumnKey,
+                        newColumn: newColumnKey,
                         projectId: selectedProject._id,
                     }),
                 });
@@ -180,11 +256,14 @@ const KanbanBoardApp: React.FC = () => {
                     },
                     body: JSON.stringify({
                         ...newCard,
-                        section: columnKey,
+                        column: columnKey,
                         projectId: selectedProject._id,
-                        postedBy: user.id,
+                        postedBy: user.name,
+                        postedById: user.id,
                     }),
                 });
+
+                console.log("Backend Response: \n", response);
 
                 const data = await response.json();
                 if (!response.ok) {

@@ -103,7 +103,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
       const data = await response.json();
       if (response.ok && data.token) {
-        localStorage.setItem('authToken', data.token);
+        localStorage.setItem('authToken', JSON.stringify(data.user));
         // Assuming your server might also return user info on login
         // if (data.user) {
         //   localStorage.setItem('user', JSON.stringify(data.user));
@@ -129,6 +129,45 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(false);
     }
   };
+
+
+  // const login = async (email: string, password: string): Promise<boolean> => {
+  //   setIsLoading(true);
+  //   setError(null);
+  //   try {
+  //     const response = await fetch('http://localhost:5000/auth/login', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({ email, password }),
+  //     });
+
+  //     const data = await response.json();
+
+  //     if (response.ok && data.token && data.user) {
+  //       const { id, name, email: userEmail } = data.user;
+
+  //       // Save full user info to localStorage
+  //       const userObj = { id, name, email: userEmail };
+  //       localStorage.setItem('authToken', data.token);
+  //       localStorage.setItem('user', JSON.stringify(userObj));
+
+  //       // Update context or state
+  //       setUser(userObj);
+  //       setIsLoggedIn(true);
+
+  //       return true;
+  //     } else {
+  //       setError(data.message || 'Login failed');
+  //       return false;
+  //     }
+  //   } catch (err) {
+  //     console.error("Login error:", err);
+  //     setError('Network error or server issue during login.');
+  //     return false;
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
 
   // const signup = async (email: string, password: string): Promise<boolean> => {
