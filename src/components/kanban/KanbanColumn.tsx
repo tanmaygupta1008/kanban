@@ -275,8 +275,8 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ column, onCardMove, onCardA
             </div>
             <ScrollArea className="flex-1 pr-4 space-y-4">
                 {column.cards.map((card) => (
-                    <KanbanCard key={card.id} card={card} projectId={projectId} onCardDeleted={() => { /* handle delete here if needed */ }} />
-                    // <KanbanCard key={card.id} card={card} projectId={projectId} />
+                    // <KanbanCard key={card.id} card={card} projectId={projectId} onCardDeleted={() => { /* handle delete here if needed */ }} />
+                    <KanbanCard key={card.id} card={card} projectId={projectId} onCardDeleted={() => { /* handle delete here if needed */ }} onCardUpdated={() => { /* handle delete here if needed */ }}  />
                 ))}
             </ScrollArea>
             <div className="mt-4">
