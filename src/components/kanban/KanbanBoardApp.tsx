@@ -363,7 +363,7 @@ const KanbanBoardApp: React.FC = () => {
                 throw new Error(`Failed to fetch Kanban data: ${kanbanResponse.statusText}`);
             }
             const kanbanData = await kanbanResponse.json();
-            console.log("Kanban Data:", kanbanData);
+            // console.log("Kanban Data:", kanbanData);
             const adaptedColumns: Column[] = kanbanData.columns.map((col: Column) => ({
                 key: col.key,
                 title: col.title,
