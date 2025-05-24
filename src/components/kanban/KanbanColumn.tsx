@@ -199,14 +199,16 @@ import { Button } from "../ui/button";
 import { PlusCircle } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "../ui/dialog"
 import { Textarea } from "../ui/textarea"
+// import { projects } from '@/data';
 
 interface KanbanColumnProps {
     column: { key: ColumnKey; title: string; cards: CardItem[] };
     onCardMove: (cardId: string, newColumnKey: ColumnKey, oldColumnKey: ColumnKey) => void;
     onCardAdd: (columnKey: ColumnKey, newCard: Omit<CardItem, 'id' | 'createdAt' | 'postedBy'>) => void;
+    projectId?: string; // Optional projectId for future use
 }
 
-const KanbanColumn: React.FC<KanbanColumnProps> = ({ column, onCardMove, onCardAdd }) => {
+const KanbanColumn: React.FC<KanbanColumnProps> = ({ column, onCardMove, onCardAdd, projectId }) => {
     const [isDraggingOver, setIsDraggingOver] = useState(false);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [newCardData, setNewCardData] = useState({
@@ -273,7 +275,8 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ column, onCardMove, onCardA
             </div>
             <ScrollArea className="flex-1 pr-4 space-y-4">
                 {column.cards.map((card) => (
-                    <KanbanCard key={card.id} card={card} />
+                    <KanbanCard key={card.id} card={card} projectId={projectId} onCardDeleted={() => { /* handle delete here if needed */ }} />
+                    // <KanbanCard key={card.id} card={card} projectId={projectId} />
                 ))}
             </ScrollArea>
             <div className="mt-4">
@@ -342,7 +345,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ column, onCardMove, onCardA
                         <DialogFooter>
                             <Button
                                 variant="outline"
-                                className="text-white hover:bg-white/10 border-gray-700"
+                                className="text-black hover:bg-white/10 hover:text-white border-gray-700"
                                 onClick={() => setIsDialogOpen(false)}
                             >
                                 Cancel
