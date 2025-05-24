@@ -461,6 +461,8 @@ const KanbanCard: React.FC<KanbanCardProps> = ({ card, onCardUpdated, onCardDele
     };
 
     const handleSave = async () => {
+      console.log("Update function is called with card ID:", localCard.id);
+      console.log("oncardUpdated callback: ", onCardUpdated);
         if (onCardUpdated) {
             setIsLoading(true);
             try {
@@ -482,6 +484,8 @@ const KanbanCard: React.FC<KanbanCardProps> = ({ card, onCardUpdated, onCardDele
                 const updatedData: CardItem = await response.json();
                 onCardUpdated(updatedData);
                 setIsChanged(false);
+                setIsDialogOpen(false); // Close the dialog after saving
+                // window.location.reload(); // Reload the page to reflect changes
             } catch (error) {
                 console.error("Error updating card:", error);
                 // Optionally show an error message to the user
