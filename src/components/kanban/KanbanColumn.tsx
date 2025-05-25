@@ -199,6 +199,7 @@ import { Button } from "../ui/button";
 import { PlusCircle } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "../ui/dialog"
 import { Textarea } from "../ui/textarea"
+import { toast } from 'react-toastify';
 // import { projects } from '@/data';
 
 interface KanbanColumnProps {
@@ -253,6 +254,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ column, onCardMove, onCardA
                 ...newCardData
             });
             setNewCardData({ idea: '', section: 'frontend', description: '' }); // Reset form
+            toast.success('New card added successfully!');
             setIsDialogOpen(false); // Close dialog
         }
     };

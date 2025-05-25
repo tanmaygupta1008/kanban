@@ -291,3 +291,53 @@ button:focus-visible {
   }
 }
 
+/* Custom toast styles */
+/* .custom-toast {
+  --progress-background: #3b82f6; 
+  --toast-progress-height: 4px; 
+} */
+
+.custom-toast .toast {
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-toast .toast::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background-color: #080832; /* Tailwind blue-500 */
+  animation: toast-progress 3s linear forwards;
+}
+
+@keyframes toast-progress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+/* Override sonner toast styles */
+/* [data-sonner-toaster][data-theme='dark'] [data-sonner-toast] {
+  --progress-background: #e22cdc;
+  --toast-progress-height: 4px;
+  background: #1f2937;
+  color: #ffffff;
+  border: 1px solid #374151;
+} */
+
+/* Progress bar animation */
+/* [data-sonner-toaster] [data-sonner-toast][data-styled='true'] [data-progress] {
+  height: var(--toast-progress-height);
+  background: var(--progress-background);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform-origin: left;
+} */

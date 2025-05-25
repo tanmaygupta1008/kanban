@@ -390,6 +390,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { ScrollArea } from "../ui/scroll-area"
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { toast } from 'react-toastify';
 
 interface KanbanCardProps {
     card: CardItem;
@@ -484,6 +485,7 @@ const KanbanCard: React.FC<KanbanCardProps> = ({ card, onCardUpdated, onCardDele
                 const updatedData: CardItem = await response.json();
                 onCardUpdated(updatedData);
                 setIsChanged(false);
+                toast.success("Card updated successfully.");
                 setIsDialogOpen(false); // Close the dialog after saving
                 // window.location.reload(); // Reload the page to reflect changes
             } catch (error) {
@@ -531,8 +533,10 @@ const KanbanCard: React.FC<KanbanCardProps> = ({ card, onCardUpdated, onCardDele
                     console.error("Failed to delete card:", errorData);
                     // Optionally show an error message
                     setIsDeleting(false);
+                    toast.error("Failed to delete card. Please try again.");
                     return;
                 }
+                toast.success("Card deleted successfully.");
                 onCardDeleted(localCard.id); // Notify parent to update UI
                 setIsDialogOpen(false); // Close the dialog after successful deletion
                 window.location.reload(); // Reload the page to reflect changes

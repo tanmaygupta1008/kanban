@@ -81,6 +81,8 @@ import { useContext } from 'react';
 import { AuthContext, AuthProvider } from './context/AuthContext';
 import LoginPage from './pages/login';
 import SignupPage from './pages/signup';
+// import { Toaster } from "sonner";
+import { ToastContainer } from 'react-toastify';
 
 // Create a Protected Route component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -105,6 +107,34 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        {/* <Toaster 
+        position="top-right" 
+        theme="dark"
+          richColors
+          closeButton
+          toastOptions={{
+            duration: 3000, // Show for 3 seconds
+          }}
+          style={{
+            // '--progress-background': '#3b82f6',
+            // '--toast-progress-height': '4px',
+          }}
+          className=".custom-toast"
+        /> */}
+
+        <ToastContainer 
+          position="top-right"
+          autoClose={3000} // 3 seconds
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+
+        {/* Define your routes here */}
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
