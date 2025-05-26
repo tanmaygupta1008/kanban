@@ -322,6 +322,12 @@ button:focus-visible {
   }
 }
 
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+
 /* Override sonner toast styles */
 /* [data-sonner-toaster][data-theme='dark'] [data-sonner-toast] {
   --progress-background: #e22cdc;
