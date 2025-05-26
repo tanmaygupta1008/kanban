@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import KanbanBoard from './KanbanBoard';
 import KanbanResources from './KanbanResources';
 import { AuthContext } from '../../context/AuthContext';
@@ -31,6 +31,16 @@ const KanbanBoardApp: React.FC = () => {
     const [newProjectDescription, setNewProjectDescription] = useState('');
     const [isDeleteProjectDialogOpen, setIsDeleteProjectDialogOpen] = useState(false);
     const [isDeletingProject, setIsDeletingProject] = useState(false);
+    const mainContentRef = useRef<HTMLDivElement>(null);
+    const scrollableContentRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        // Prevent body scrolling
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, []);
 
     const fetchAllProjects = async () => {
         setProjectsLoading(true);
@@ -138,12 +148,12 @@ const KanbanBoardApp: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black flex">
+        <div className="min-h-screen max-h-screen overflow-hidden bg-gradient-to-br from-gray-900 via-purple-900 to-black flex">
             {/* Project Sidebar (Left) */}
-            <aside className="min-w-45 bg-gray-800 text-gray-300 p-6 border-r border-gray-700 overflow-y-auto flex flex-col justify-between">
-                <div>
+            <aside className="min-w-45 max-h-screen overflow-y-hidden bg-gray-800 text-gray-300 p-6 border-r border-gray-700 flex flex-col justify-between">
+                <div className='overflow-y-auto hide-scrollbar'>
                     <h2 className="text-xl font-semibold mb-4 text-white">Projects</h2>
-                    <ul>
+                    <ul className="overflow-y-auto max-h-[calc(100vh - 180px)]">
                         {projectsLoading && <li className="py-2 px-4">Loading projects...</li>}
                         {projectsError && <li className="py-2 px-4 text-red-500">{projectsError}</li>}
                         {!projectsLoading && !projectsError && allProjects.length === 0 && (
@@ -244,66 +254,72 @@ const KanbanBoardApp: React.FC = () => {
             </aside>
 
             {/* Main Content Area */}
-            <div className="flex-1 overflow-x-auto p-8 pr-5">
-                <div className="flex justify-between items-center mb-4">
-                    <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
-                        {selectedProject?.name || "Select a Project"}
-                    </h1>
-                    <button
-                        onClick={logout}
-                        className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500"
-                    >
-                        Logout
-                    </button>
-                </div>
-
-                {selectedProject && (
-                    <div className="text-center space-y-4 mb-8">
-                        <div className="flex flex-wrap justify-center gap-4">
-                            {selectedProject.teamMembers?.map((member) => (
-                                <div key={member.userId} className="flex items-center gap-2">
-                                    <Avatar>
-                                        <AvatarImage src={member.avatarUrl || `https://placehold.co/100x100/80ED99/000000?text=${member.name[0]}`} alt={member.name} />
-                                        <AvatarFallback>{member.name[0]}</AvatarFallback>
-                                    </Avatar>
-                                    <span className="text-gray-300">{member.name}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
-
+            <div ref={mainContentRef} className="flex-1 flex flex-col overflow-hidden p-8 pr-5">
+                {/* Fixed Header */}
                 <div className="mb-8">
-                    <button
-                        className={`mr-4 py-2 px-4 rounded-md ${
-                            activeTab === 'kanban' ? 'bg-blue-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white'
-                        }`}
-                        onClick={() => setActiveTab('kanban')}
-                    >
-                        Kanban Board
-                    </button>
-                    <button
-                        className={`py-2 px-4 rounded-md ${
-                            activeTab === 'resources' ? 'bg-blue-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white'
-                        }`}
-                        onClick={() => setActiveTab('resources')}
-                    >
-                        Resources
-                    </button>
+                    <div className="flex justify-between items-center mb-4">
+                        <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+                            {selectedProject?.name || "Select a Project"}
+                        </h1>
+                        <button
+                            onClick={logout}
+                            className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500"
+                        >
+                            Logout
+                        </button>
+                    </div>
+
+                    {selectedProject && (
+                        <div className="text-center space-y-4 mb-8">
+                            <div className="flex flex-wrap justify-center gap-4">
+                                {selectedProject.teamMembers?.map((member) => (
+                                    <div key={member.userId} className="flex items-center gap-2">
+                                        <Avatar>
+                                            <AvatarImage src={member.avatarUrl || `https://placehold.co/100x100/80ED99/000000?text=${member.name[0]}`} alt={member.name} />
+                                            <AvatarFallback>{member.name[0]}</AvatarFallback>
+                                        </Avatar>
+                                        <span className="text-gray-300">{member.name}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="mb-1">
+                        <button
+                            className={`mr-4 py-2 px-4 rounded-md ${
+                                activeTab === 'kanban' ? 'bg-blue-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white'
+                            }`}
+                            onClick={() => setActiveTab('kanban')}
+                        >
+                            Kanban Board
+                        </button>
+                        <button
+                            className={`py-2 px-4 rounded-md ${
+                                activeTab === 'resources' ? 'bg-blue-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white'
+                            }`}
+                            onClick={() => setActiveTab('resources')}
+                        >
+                            Resources
+                        </button>
+                    </div>
                 </div>
 
-                {activeTab === 'kanban' && selectedProject && (
-                    <KanbanBoard selectedProjectId={selectedProject?._id} currentProjectDetails={selectedProject} />
-                )}
-                {activeTab === 'kanban' && !selectedProject && (
-                    <div className="text-center text-gray-400">Please select a project to view the Kanban Board.</div>
-                )}
-                {activeTab === 'resources' && selectedProject && (
-                    <KanbanResources selectedProjectId={selectedProject?._id} />
-                )}
-                {activeTab === 'resources' && !selectedProject && (
-                    <div className="text-center text-gray-400">Please select a project to view Resources.</div>
-                )}
+                {/* Scrollable Content Below Buttons */}
+                <div ref={scrollableContentRef} className="overflow-y-auto flex-1 hide-scrollbar">
+                    {activeTab === 'kanban' && selectedProject && (
+                        <KanbanBoard selectedProjectId={selectedProject?._id} currentProjectDetails={selectedProject} />
+                    )}
+                    {activeTab === 'kanban' && !selectedProject && (
+                        <div className="text-center text-gray-400">Please select a project to view the Kanban Board.</div>
+                    )}
+                    {activeTab === 'resources' && selectedProject && (
+                        <KanbanResources selectedProjectId={selectedProject?._id} />
+                    )}
+                    {activeTab === 'resources' && !selectedProject && (
+                        <div className="text-center text-gray-400">Please select a project to view Resources.</div>
+                    )}
+                </div>
             </div>
         </div>
     );

@@ -198,7 +198,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ selectedProjectId }) => {
             {error && <div className="text-center text-red-500">{error}</div>}
 
             {!loading && !error && selectedProjectId && (
-                <div className="flex overflow-x-auto gap-3 w-full">
+                <div className="flex overflow-x-auto hide-scrollbar gap-3 w-full">
                     {columns.map((column) => (
                         <KanbanColumn
                             key={column.key}
