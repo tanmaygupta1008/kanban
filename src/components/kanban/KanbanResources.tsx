@@ -527,7 +527,7 @@ const KanbanResources: React.FC<KanbanResourcesProps> = ({ selectedProjectId }) 
                                                     </div>
                                                 )}
                                             </div>
-                                            <h3 className='text-white text-center pt-2'>{resource.description}</h3>
+                                            <h3 className='text-white text-center pt-2 capitalize'>{resource.description}</h3>
                                         </li>
                                     ))}
                                 </ul>
