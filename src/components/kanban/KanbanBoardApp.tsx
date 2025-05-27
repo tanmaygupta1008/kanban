@@ -540,7 +540,7 @@ const KanbanBoardApp: React.FC = () => {
                     {selectedProject ? (
                         <div className="mb-8">
                             {selectedProject.description && (
-                                <p className="text-gray-400 text-sm mb-4">
+                                <p className="text-white text-sm mb-4">
                                     {selectedProject.description}
                                 </p>
                             )}
