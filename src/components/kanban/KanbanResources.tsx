@@ -532,54 +532,6 @@ const KanbanResources: React.FC<KanbanResourcesProps> = ({ selectedProjectId }) 
                                     ))}
                                 </ul>
                             ) : (
-                                // <ul className="">
-                                //     {categorizedResources[category as keyof typeof categorizedResources]?.map((resource) => (
-                                //         <li
-                                //             key={resource._id}
-                                //             className={`resource-list-item relative`}
-                                //             onClick={(e) => handleResourceItemClick(e, resource._id!)}
-                                //         >
-                                //             {isBulkDeleteMode && (
-                                //                 <Checkbox
-                                //                     className="absolute top-1/2 left-2 -translate-y-1/2 z-10 select-all-checkbox"
-                                //                     checked={selectedResourceIds.includes(resource._id!)}
-                                //                     onCheckedChange={() => toggleResourceSelection(resource._id!)}
-                                //                 />
-                                //             )}
-                                //             <div className="resource-item-content flex-grow">
-                                //                 <a
-                                //                     href={resource.link}
-                                //                     target="_blank"
-                                //                     rel="noopener noreferrer"
-                                //                     className="text-blue-500 hover:underline block"
-                                //                     onClick={handleLinkClick}
-                                //                 >
-                                //                     View {category.slice(0, -1).charAt(0).toUpperCase() + category.slice(0, -1).slice(1)}
-                                //                 </a>
-                                //                 {resource.description && (
-                                //                     <p className="text-gray-400 text-sm">{resource.description}</p>
-                                //                 )}
-                                //             </div>
-                                //             {!isBulkDeleteMode && (
-                                //                 <Button
-                                //                     variant="destructive"
-                                //                     size="icon"
-                                //                     onClick={() => confirmSingleDelete(resource._id!)}
-                                //                     className="ml-2"
-                                //                 >
-                                //                     <Trash className="w-4 h-4" />
-                                //                 </Button>
-                                //             )}
-                                //         </li>
-                                //     ))}
-                                // </ul>
-
-
-
-
-
-
-
                                 <ul className="grid grid-cols-2 gap-4">
                                     {categorizedResources[category as keyof typeof categorizedResources]?.map((resource) => (
                                         <li
@@ -738,3 +690,6 @@ const KanbanResources: React.FC<KanbanResourcesProps> = ({ selectedProjectId }) 
 };
 
 export default KanbanResources;
+
+
+
