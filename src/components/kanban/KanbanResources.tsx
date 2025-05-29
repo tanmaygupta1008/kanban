@@ -172,7 +172,7 @@ const KanbanResources: React.FC<KanbanResourcesProps> = ({ selectedProjectId }) 
         });
     };
 
-    const handleResourceItemClick = (event: React.MouseEvent, resourceId: string, isLinkClick: boolean = false) => {
+    const handleResourceItemClick = (resourceId: string, isLinkClick: boolean = false) => {
         if (isBulkDeleteMode && !isLinkClick) {
             toggleResourceSelection(resourceId);
         } else if (!isBulkDeleteMode) {
@@ -537,7 +537,7 @@ const KanbanResources: React.FC<KanbanResourcesProps> = ({ selectedProjectId }) 
                                         <li
                                             key={resource._id}
                                             className={`resource-list-item relative p-4 rounded-md`}
-                                            onClick={(e) => handleResourceItemClick(e, resource._id!)}
+                                            onClick={() => handleResourceItemClick(resource._id!)}
                                         >
                                             {isBulkDeleteMode && (
                                                 <Checkbox
